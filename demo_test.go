@@ -108,7 +108,7 @@ func Test_uploadFileDemo(t *testing.T) {
 		f *os.File
 	}
 
-	openFile, err := os.Open("./test.txt")
+	openFile, err := os.Open("./client.go")
 	if err != nil {
 		panic(err)
 	}
