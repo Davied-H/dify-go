@@ -1,4 +1,4 @@
-module dify-go
+module github.com/Davied-H/dify-go
 
 go 1.24
 
