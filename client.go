@@ -75,7 +75,7 @@ func (c *Client) request(ctx context.Context, option requestOption) (readCloser 
 	var body *strings.Reader
 
 	contentType := option.Headers["Content-Type"]
-	if contentType == "application/json" {
+	if contentType == "application/json" || contentType == "" {
 		bodyBytes, marshalErr := json.Marshal(option.RequestBody)
 		if marshalErr != nil {
 			fmt.Printf("marshalErr: %s\n", marshalErr.Error())
