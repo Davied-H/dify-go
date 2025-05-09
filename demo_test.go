@@ -3,7 +3,16 @@ package dify
 import (
 	"os"
 	"testing"
+
+	"github.com/joho/godotenv"
 )
+
+func init() {
+	loadEnvErr := godotenv.Load(".env")
+	if loadEnvErr != nil {
+		panic(loadEnvErr)
+	}
+}
 
 func Test_chatMessageStreamDemo(t *testing.T) {
 	tests := []struct {

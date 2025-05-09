@@ -6,15 +6,7 @@ import (
 	"os"
 
 	"github.com/duke-git/lancet/v2/formatter"
-	"github.com/joho/godotenv"
 )
-
-func init() {
-	loadEnvErr := godotenv.Load(".env")
-	if loadEnvErr != nil {
-		panic(loadEnvErr)
-	}
-}
 
 func chatMessageStreamDemo(query string) {
 	client := NewClient("http://dify.hubs.org.cn/v1")
