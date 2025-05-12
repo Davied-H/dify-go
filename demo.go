@@ -9,7 +9,7 @@ import (
 )
 
 func chatMessageStreamDemo(query string) {
-	client := NewClient("http://dify.hubs.org.cn/v1")
+	client := NewClient(os.Getenv("DIFY_API_URL"))
 	user := "dong"
 	_, chatMessageErr := client.ChatMessage(context.TODO(), ChatMessageOption{
 		ApiKey: os.Getenv("DIFY_API_KEY"),
@@ -47,7 +47,7 @@ func chatMessageStreamDemo(query string) {
 }
 
 func chatMessageBlockDemo(query string) {
-	client := NewClient("http://dify.hubs.org.cn/v1")
+	client := NewClient(os.Getenv("DIFY_API_URL"))
 	chatMessageResp, chatMessageErr := client.ChatMessage(context.TODO(), ChatMessageOption{
 		ApiKey: os.Getenv("DIFY_API_KEY"),
 		RequestBody: ChatMessageReq{
@@ -68,7 +68,7 @@ func chatMessageBlockDemo(query string) {
 }
 
 func stopTaskDemo(taskId string) {
-	client := NewClient("http://dify.hubs.org.cn/v1")
+	client := NewClient(os.Getenv("DIFY_API_URL"))
 	stopTaskResp, stopTaskErr := client.StopTask(context.TODO(), StopTaskOption{
 		ApiKey: os.Getenv("DIFY_API_KEY"),
 		TaskId: taskId,
@@ -84,7 +84,7 @@ func stopTaskDemo(taskId string) {
 }
 
 func getSuggestedDemo(messageId string) {
-	client := NewClient("http://dify.hubs.org.cn/v1")
+	client := NewClient(os.Getenv("DIFY_API_URL"))
 	getSuggested, getSuggestedErr := client.GetSuggested(context.TODO(), GetSuggestedOption{
 		ApiKey:    os.Getenv("DIFY_API_KEY"),
 		MessageId: messageId,
@@ -100,7 +100,7 @@ func getSuggestedDemo(messageId string) {
 }
 
 func getMessagesDemo(conversationId string) {
-	client := NewClient("http://dify.hubs.org.cn/v1")
+	client := NewClient(os.Getenv("DIFY_API_URL"))
 	var getMessagesResp, getMessageErr = client.GetMessages(context.TODO(), GetMessagesOption{
 		ApiKey: os.Getenv("DIFY_API_KEY"),
 		RequestParams: GetMessagesReq{
@@ -118,7 +118,7 @@ func getMessagesDemo(conversationId string) {
 }
 
 func uploadFileDemo(f *os.File) {
-	client := NewClient("http://dify.hubs.org.cn/v1")
+	client := NewClient(os.Getenv("DIFY_API_URL"))
 	uploadFileResp, uploadFileErr := client.UploadFile(context.TODO(), UploadFileOption{
 		ApiKey: os.Getenv("DIFY_API_KEY"),
 		RequestFormData: UploadFileReq{

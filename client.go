@@ -65,6 +65,7 @@ type requestOption struct {
 	RequestFormData requestOptionRequestFormData
 	Headers         map[string]string
 }
+
 type requestOptionRequestFormData struct {
 	Buffer *bytes.Buffer
 	Writer *multipart.Writer
