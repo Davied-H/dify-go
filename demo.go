@@ -133,3 +133,20 @@ func uploadFileDemo(f *os.File) {
 	pretty, _ := formatter.Pretty(uploadFileResp)
 	fmt.Println("uploadFileResp: ", pretty)
 }
+
+func conversationRenameDemo() {
+	client := NewClient(os.Getenv("DIFY_API_URL"))
+	chatMessageResp, chatMessageErr := client.ConversationRename(context.TODO(), ConversationRenameOption{
+		ConversationId: "d7fbd86a-3548-4168-9ee1-a87cd48172df",
+		ApiKey:         os.Getenv("DIFY_API_KEY"),
+		RequestBody: ConversationRenameReq{
+			Name:         "test",
+			AutoGenerate: false,
+			User:         "dong",
+		},
+	})
+	if chatMessageErr != nil {
+		fmt.Println("chatMessageErr: ", chatMessageErr.Error())
+	}
+	fmt.Println("chatMessageResp: ", chatMessageResp)
+}

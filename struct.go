@@ -157,3 +157,24 @@ type GetMessagesResp struct {
 		CreatedAt int `json:"created_at"`
 	} `json:"data"`
 }
+
+type ConversationRenameOption struct {
+	ConversationId string `validate:"required"`
+	ApiKey         string `validate:"required"`
+	RequestBody    ConversationRenameReq
+}
+type ConversationRenameReq struct {
+	Name         string `json:"name"`          // （选填）名称，若 auto_generate 为 true 时，该参数可不传。
+	AutoGenerate bool   `json:"auto_generate"` // （选填）自动生成标题，默认 false。
+	User         string `json:"user"`          //
+}
+type ConversationRenameResp struct {
+	Id     string `json:"id"`
+	Name   string `json:"name"`
+	Inputs struct {
+	} `json:"inputs"`
+	Status       string `json:"status"`
+	Introduction string `json:"introduction"`
+	CreatedAt    int    `json:"created_at"`
+	UpdatedAt    int    `json:"updated_at"`
+}

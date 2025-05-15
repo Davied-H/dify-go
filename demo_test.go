@@ -130,3 +130,22 @@ func Test_uploadFileDemo(t *testing.T) {
 		})
 	}
 }
+
+func Test_conversationRenameDemo(t *testing.T) {
+	type args struct {
+	}
+	tests := []struct {
+		name string
+		args args
+	}{
+		{
+			name: "conversationRenameDemo",
+			args: args{},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			conversationRenameDemo()
+		})
+	}
+}

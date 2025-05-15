@@ -18,11 +18,12 @@ import (
 )
 
 var (
-	ApiPathChatMessage  = "/chat-messages"
-	ApiPathUploadFile   = "/files/upload"
-	ApiPathStopTask     = "/chat-messages/%s/stop"
-	ApiPathGetSuggested = "/messages/%s/suggested"
-	ApiPathGetMessages  = "/messages"
+	ApiPathChatMessage        = "/chat-messages"
+	ApiPathConversationRename = "/conversations/%s/name"
+	ApiPathUploadFile         = "/files/upload"
+	ApiPathStopTask           = "/chat-messages/%s/stop"
+	ApiPathGetSuggested       = "/messages/%s/suggested"
+	ApiPathGetMessages        = "/messages"
 
 	ResponseModeBlocking  = "blocking"
 	ResponseModeStreaming = "streaming"
@@ -35,6 +36,7 @@ type ClientI interface {
 	StopTask(ctx context.Context, option StopTaskOption) (*StopTaskResp, error)
 	GetSuggested(ctx context.Context, option GetSuggestedOption) (*GetSuggestedResp, error)
 	GetMessages(ctx context.Context, option GetMessagesOption) (*GetMessagesResp, error)
+	ConversationRename(ctx context.Context, option ConversationRenameOption) (*ConversationRenameResp, error)
 }
 
 type Client struct {
@@ -422,6 +424,53 @@ func (c *Client) GetMessages(ctx context.Context, option GetMessagesOption) (res
 		err = errors.New(fmt.Sprintf("readAllErr: %s", readAllErr.Error()))
 		return
 	}
+	unmarshalErr := json.Unmarshal(all, &resp)
+	if unmarshalErr != nil {
+		err = errors.New(fmt.Sprintf("unmarshalErr: %s", unmarshalErr.Error()))
+		return
+	}
+
+	return
+}
+
+// ConversationRename 会话重命名
+func (c *Client) ConversationRename(ctx context.Context, option ConversationRenameOption) (resp *ConversationRenameResp, err error) {
+
+	// 校验参数
+	validate := validator.New()
+	validateErr := validate.Struct(option)
+	if validateErr != nil {
+		err = errors.New(fmt.Sprintf("validateErr: %s", validateErr.Error()))
+		return
+	}
+
+	// 发起请求
+	response, requestErr := c.request(ctx, requestOption{
+		Method:      http.MethodPost,
+		ApiPath:     fmt.Sprintf(ApiPathConversationRename, option.ConversationId),
+		ApiKey:      option.ApiKey,
+		RequestBody: option.RequestBody,
+		Headers:     nil,
+	})
+	if requestErr != nil {
+		err = errors.New(fmt.Sprintf("requestErr: %s", requestErr.Error()))
+		return
+	}
+
+	// 错误处理
+	if response.StatusCode != http.StatusOK {
+		all, _ := io.ReadAll(response.Body)
+		err = errors.New(string(all))
+		return
+	}
+
+	// 解析返回参
+	all, readAllErr := io.ReadAll(response.Body)
+	if readAllErr != nil {
+		err = errors.New(fmt.Sprintf("readAllErr: %s", readAllErr.Error()))
+		return
+	}
+
 	unmarshalErr := json.Unmarshal(all, &resp)
 	if unmarshalErr != nil {
 		err = errors.New(fmt.Sprintf("unmarshalErr: %s", unmarshalErr.Error()))

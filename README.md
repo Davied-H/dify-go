@@ -24,6 +24,7 @@ go get github.com/Davied-H/dify-go
 
 ```bash
 # .env文件示例
+DIFY_API_URL=your_dify_api_url
 DIFY_API_KEY=your_api_key_here
 ```
 
